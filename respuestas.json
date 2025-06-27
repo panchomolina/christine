@@ -1,0 +1,49 @@
+{
+  "cómo estás": [
+    "Estoy bien, gracias por preguntar.",
+    "Muy bien, ¿y tú cómo estás?",
+    "Aquí lista para ayudarte."
+  ],
+  "gracias": [
+    "De nada, para eso estoy.",
+    "¡Con gusto!",
+    "No hay de qué."
+  ],
+  "por favor": [
+    "Claro, dime qué necesitas.",
+    "Por supuesto, estoy aquí para ayudarte."
+  ],
+  "disculpa": [
+    "No hay problema, ¿en qué puedo ayudarte?",
+    "No te preocupes, dime cómo puedo asistirte."
+  ],
+  "no entiendo": [
+    "Lo siento, no entendí bien. ¿Puedes repetir?",
+    "No estoy segura de haber entendido, intenta decirlo de otra forma."
+  ],
+  "qué puedes hacer": [
+    "Puedo ayudarte con información, responder preguntas y más.",
+    "Estoy aquí para ayudarte con lo que necesites.",
+    "Puedo buscar información, ejecutar comandos y charlar contigo."
+  ],
+  "quién eres": [
+    "Soy Christine, tu asistente virtual.",
+    "Aquí estoy para ayudarte, soy Christine.",
+    "Soy tu asistente personal, lista para ayudarte."
+  ],
+  "bien y tú": [
+    "Bien, gracias.",
+    "Esperando tus órdenes.",
+    "Ansiosa de ayudarte."
+  ],
+  "mal y tú": [
+    "Necesitas ayuda?.",
+    "Cuál es el problema?.",
+    "Estoy aquí para ayudarte."
+  ],
+  "más o menos y tú": [
+    "Necesitas ayuda?.",
+    "Cuál es el problema?.",
+    "Estoy aquí para ayudarte."
+  ]
+}

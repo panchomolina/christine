@@ -1,0 +1,175 @@
+#########################################
+# PASO 1: Instalar dependencias básicas #
+#########################################
+
+En la terminal ejecutar lo que no esta comentado con #:
+
+# Actualizar
+sudo apt update
+
+# Dependencias basicas
+sudo apt install python3 python3-pip python3-venv mpg123 pulseaudio-utils ffmpeg
+
+    # mpg123: para reproducir audio mp3.
+    # pulseaudio-utils: para controlar micrófono con pactl.
+    # ffmpeg: para convertir audio (usado por pico2wave fallback).
+
+###########################################
+# PASO 2: Crear y activar entorno virtual #
+###########################################
+
+En la terminal ejecutar lo que no esta comentado con #:
+
+# Crea carpeta asistente en el home del usuario
+mkdir ~/asistente
+
+# Ingresa a la carpeta
+cd ~/asistente
+
+# Crea el entorno virtual
+python3 -m venv asistente_env
+
+# Activa el entorno
+source asistente_env/bin/activate
+
+############################################
+# PASO 3: Pegar archivos en carpeta creada #
+############################################
+
+Copiar y pegar los archivos descargados en la carpeta antes creada.
+
+########################################
+# PASO 4: Instalar dependencias Python #
+########################################
+
+En la terminal ejecutar lo siguiente:
+
+pip install -r requirements.txt
+
+##################################################
+# PASO 5. Descargar modelo de voz Vosk (Español) #
+##################################################
+
+En la terminal ejecutar lo que no esta comentado con #:
+
+# Ingresa a carpeta de modelos vosk
+cd ~/asistente/modelos_vosk
+
+# Descarga el modelo español 0.42 de 1.4GB
+wget https://alphacephei.com/vosk/models/vosk-model-es-0.42.zip
+
+# Descomprimir modelo (Creara la carpeta vosk-model-es-0.42 dentro de modelos_vosk
+unzip vosk-model-es-0.42.zip
+
+# Eliminar archivo descargado una vez se descomprima
+rm vosk-model-es-0.42.zip
+
+##############################
+# PASO 6. Editar config.json #
+##############################
+
+Edita el config.json con tu editor de texto favorito o por terminal según tus necesidades.
+Las variables a editar:
+nombre_asistente -> el nombre que tendra tu asistente
+alias_asistente -> si no te entiende y ves que reconoce otras palabras las puedes agregar aca o si quieres llamarla de otra forma ademas de su nombre
+ubicacion -> latitud y longitud de tu ciudad. Lo puedes ver en Google Maps
+noticias_max -> es el maximo de noticias que leera
+url_noticias -> el feed en xml de tu web de noticias favorita
+nombre_usuario -> tu nombre
+tratamiento -> como quieres que te diga la asistente
+
+Las demas variables dejarlas tal cual.
+
+##########################
+# PASO 7. Crear lanzador #
+##########################
+
+En la terminal ejecutar lo que no esta comentado con #:
+
+# Crear carpeta donde ira el lanzador si es que no esta ya creada
+mkdir -p ~/.local/share/applications
+
+# Abrir (crear) archivo lanzador 
+nano ~/.local/share/applications/christine.desktop
+
+# Pegar lo siguiente dentro del archivo antes creado (copiar con CTRL+C y pegan en nano con CTRL+SHIFT+V
+# Cambiar NOMBREDEUSUARIO al que corresponda (al de su sesion). Pueden verlo con el comando who
+
+[Desktop Entry]
+Name=Christine
+Comment=Asistente virtual con visor
+Exec=/home/NOMBREDEUSUARIO/asistente/asistente.sh
+Icon=/home/NOMBREDEUSUARIO/asistente/img/circulo_brillante.png
+Terminal=false
+Type=Application
+Categories=Utility;
+
+# Para guardar en nano -> CTRL+O y salir CTRL+X
+
+#####################################
+# PASO 8. Dar permisos de ejecucion #
+#####################################
+
+# Permisos de ejecucion al script que activa el entorno virtual y abre el main.py
+chmod +x ~/asistente/asistente.sh
+
+# Permisos de ejecucion al lanzador
+chmod +x ~/.local/share/applications/christine.desktop
+
+# Reiniciar cinnamon para ver el icono del lanzador en el menu (o reiniciar sesion o sistema)
+cinnamon --replace &
+
+
+###################################
+# PASO 9. Disfrutar del asistente #
+###################################
+
+Abrir el asistente desde el lanzador.
+
+
+
+##########
+# EXTRAS #
+##########
+
+Si utilizas el comando para subir y bajar brillo, necesitaras hacer lo siguiente:
+
+Ejecutar en terminal este comando:
+ls /sys/class/backlight/
+
+En mi caso, me responde: amdgpu_bl2, pero puede ser intel_backlight
+Guarda ese dato.
+
+Ejecuta este comando para verificar permisos:
+ls -l /sys/class/backlight/*/brightness
+
+El resultado deberia ser parecido a esto:
+-rw-rw-r-- 1 root video 4096 jun 24 20:31 /sys/class/backlight/amdgpu_bl2/brightness
+
+Lo siguiente es crear una regla:
+sudo nano /etc/udev/rules.d/90-brillo.rules
+
+Pegar lo siguiente (si tienes amdgpu_bl2 como yo, la linea queda igual, si tienes intel_backlight deberas cambiar donde corresponda):
+SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl2", RUN+="/bin/chmod 0666 /sys/class/backlight/amdgpu_bl2/brightness"
+
+Guarda con Ctrl + O y luego cierra con Ctrl + X.
+
+Recargar reglas, ejecuta estos comandos:
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+Vuelve a verificar permisos:
+ls -l /sys/class/backlight/amdgpu_bl2/brightness
+
+Deberias ver algo como esto:
+-rw-rw-rw- 1 root video 4096 jun 24 20:31 /sys/class/backlight/amdgpu_bl2/brightness
+
+Ahora si tiene permisos de escritura
+
+Opcional, ejecuta este comando en la terminal:
+brightnessctl set +10%
+
+Si sube el brillo, quiere decir que funciona.
+
+Para bajar brillo desde terminal ejecuta esto:
+brightnessctl set 10%-

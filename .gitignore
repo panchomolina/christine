@@ -1,0 +1,25 @@
+# Entorno virtual
+asistente_env/
+
+# Modelo Vosk
+modelos_vosk/
+
+# Cachés de Python
+__pycache__/
+*.pyc
+
+#tts
+tts-env/
+
+# Archivos temporales
+*.swp
+*.bak
+*.tmp
+
+# Archivos comprimidos
+*.zip
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+

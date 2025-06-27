@@ -1,0 +1,15 @@
+{
+  "respuesta_por_voz": true,
+  "nombre_asistente": "christine",
+  "alias_asistente": ["christine", "christy", "kristin", "kristen", "kresten", "christen", "cristina", "christina", "christin"],
+  "ubicacion": {
+    "lat": -33.0510765,
+    "lon": -71.6222547
+  },
+  "noticias_max": 5,
+  "idioma": "es",
+  "bloquear_microfono_durante_audio": true,
+  "url_noticias": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+  "nombre_usuario": "Francisco",
+  "tratamiento": "señor"
+}
